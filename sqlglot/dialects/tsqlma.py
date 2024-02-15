@@ -76,9 +76,9 @@ def _format_time_lambda(
                 format_time(
                     args[0].name.lower(),
                     (
-                        {**TSQL.TIME_MAPPING, **FULL_FORMAT_TIME_MAPPING}
+                        {**TSQLMA.TIME_MAPPING, **FULL_FORMAT_TIME_MAPPING}
                         if full_format_mapping
-                        else TSQL.TIME_MAPPING
+                        else TSQLMA.TIME_MAPPING
                     ),
                 )
             ),
@@ -99,9 +99,9 @@ def _parse_format(args: t.List) -> exp.Expression:
 
     if fmt:
         fmt = exp.Literal.string(
-            format_time(fmt.name, TSQL.FORMAT_TIME_MAPPING)
+            format_time(fmt.name, TSQLMA.FORMAT_TIME_MAPPING)
             if len(fmt.name) == 1
-            else format_time(fmt.name, TSQL.TIME_MAPPING)
+            else format_time(fmt.name, TSQLMA.TIME_MAPPING)
         )
 
     return exp.TimeToStr(this=this, format=fmt, culture=culture)
@@ -141,12 +141,12 @@ def _parse_hashbytes(args: t.List) -> exp.Expression:
 DATEPART_ONLY_FORMATS = {"DW", "HOUR", "QUARTER"}
 
 
-def _format_sql(self: TSQL.Generator, expression: exp.NumberToStr | exp.TimeToStr) -> str:
+def _format_sql(self: TSQLMA.Generator, expression: exp.NumberToStr | exp.TimeToStr) -> str:
     fmt = expression.args["format"]
 
     if not isinstance(expression, exp.NumberToStr):
         if fmt.is_string:
-            mapped_fmt = format_time(fmt.name, TSQL.INVERSE_TIME_MAPPING)
+            mapped_fmt = format_time(fmt.name, TSQLMA.INVERSE_TIME_MAPPING)
 
             name = (mapped_fmt or "").upper()
             if name in DATEPART_ONLY_FORMATS:
@@ -161,7 +161,7 @@ def _format_sql(self: TSQL.Generator, expression: exp.NumberToStr | exp.TimeToSt
     return self.func("FORMAT", expression.this, fmt_sql, expression.args.get("culture"))
 
 
-def _string_agg_sql(self: TSQL.Generator, expression: exp.GroupConcat) -> str:
+def _string_agg_sql(self: TSQLMA.Generator, expression: exp.GroupConcat) -> str:
     this = expression.this
     distinct = expression.find(exp.Distinct)
     if distinct:
@@ -286,14 +286,14 @@ def _parse_as_text(
 
 
 def _json_extract_sql(
-    self: TSQL.Generator, expression: exp.JSONExtract | exp.JSONExtractScalar
+    self: TSQLMA.Generator, expression: exp.JSONExtract | exp.JSONExtractScalar
 ) -> str:
     json_query = self.func("JSON_QUERY", expression.this, expression.expression)
     json_value = self.func("JSON_VALUE", expression.this, expression.expression)
     return self.func("ISNULL", json_query, json_value)
 
 
-class TSQL(Dialect):
+class TSQLMA(Dialect):
     NORMALIZATION_STRATEGY = NormalizationStrategy.CASE_INSENSITIVE
     TIME_FORMAT = "'yyyy-mm-dd hh:mm:ss'"
     SUPPORTS_SEMI_ANTI_JOIN = False
@@ -592,12 +592,12 @@ class TSQL(Dialect):
                 format_val = self._parse_number()
                 format_val_name = format_val.name if format_val else ""
 
-                if format_val_name not in TSQL.CONVERT_FORMAT_MAPPING:
+                if format_val_name not in TSQLMA.CONVERT_FORMAT_MAPPING:
                     raise ValueError(
                         f"CONVERT function at T-SQL does not support format style {format_val_name}"
                     )
 
-                format_norm = exp.Literal.string(TSQL.CONVERT_FORMAT_MAPPING[format_val_name])
+                format_norm = exp.Literal.string(TSQLMA.CONVERT_FORMAT_MAPPING[format_val_name])
 
                 # Check whether the convert entails a string to date format
                 if to.this == DataType.Type.DATE:
