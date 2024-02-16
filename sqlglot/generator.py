@@ -3033,7 +3033,7 @@ class Generator(metaclass=_Generator):
 
     def binary(self, expression: exp.Binary, op: str) -> str:
         op = self.maybe_comment(op, comments=expression.comments)
-        return f"{self.sql(expression, 'this')} {op} {self.sql(expression, 'expression')}"
+        return f"{op} ({self.sql(expression, 'this')} , {self.sql(expression, 'expression')})"
 
     def function_fallback_sql(self, expression: exp.Func) -> str:
         args = []
