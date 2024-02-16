@@ -2662,7 +2662,7 @@ class Generator(metaclass=_Generator):
         return f"{this} AT TIME ZONE {zone} AT TIME ZONE 'UTC'"
 
     def add_sql(self, expression: exp.Add) -> str:
-        return self.binary(expression, "+")
+        return self.binary(expression, "ADD")
 
     def and_sql(self, expression: exp.And) -> str:
         return self.connector_sql(expression, "AND")
@@ -2705,7 +2705,7 @@ class Generator(metaclass=_Generator):
         format_sql = f" FORMAT {format_sql}" if format_sql else ""
         to_sql = self.sql(expression, "to")
         to_sql = f" {to_sql}" if to_sql else ""
-        return f"{safe_prefix or ''}CAST({self.sql(expression, 'this')} AS{to_sql}{format_sql})"
+        return f"{safe_prefix or ''}CAST({self.sql(expression, 'this')})"
 
     def currentdate_sql(self, expression: exp.CurrentDate) -> str:
         zone = self.sql(expression, "this")
@@ -2931,7 +2931,7 @@ class Generator(metaclass=_Generator):
                     )
                 )
 
-        return self.binary(expression, "/")
+        return self.binary(expression, "DIV")
 
     def overlaps_sql(self, expression: exp.Overlaps) -> str:
         return self.binary(expression, "OVERLAPS")
@@ -2943,7 +2943,7 @@ class Generator(metaclass=_Generator):
         return f"{self.sql(expression, 'this')}.{self.sql(expression, 'expression')}"
 
     def eq_sql(self, expression: exp.EQ) -> str:
-        return self.binary(expression, "=")
+        return self.binary(expression, "EQ")
 
     def propertyeq_sql(self, expression: exp.PropertyEQ) -> str:
         return self.binary(expression, ":=")
@@ -2955,10 +2955,10 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "GLOB")
 
     def gt_sql(self, expression: exp.GT) -> str:
-        return self.binary(expression, ">")
+        return self.binary(expression, "GT")
 
     def gte_sql(self, expression: exp.GTE) -> str:
-        return self.binary(expression, ">=")
+        return self.binary(expression, "GTE")
 
     def ilike_sql(self, expression: exp.ILike) -> str:
         return self.binary(expression, "ILIKE")
@@ -2983,19 +2983,19 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "SIMILAR TO")
 
     def lt_sql(self, expression: exp.LT) -> str:
-        return self.binary(expression, "<")
+        return self.binary(expression, "LT")
 
     def lte_sql(self, expression: exp.LTE) -> str:
-        return self.binary(expression, "<=")
+        return self.binary(expression, "LTE")
 
     def mod_sql(self, expression: exp.Mod) -> str:
-        return self.binary(expression, "%")
+        return self.binary(expression, "MOD")
 
     def mul_sql(self, expression: exp.Mul) -> str:
         return self.binary(expression, "MUL")
 
     def neq_sql(self, expression: exp.NEQ) -> str:
-        return self.binary(expression, "<>")
+        return self.binary(expression, "NEQ")
 
     def nullsafeeq_sql(self, expression: exp.NullSafeEQ) -> str:
         return self.binary(expression, "IS NOT DISTINCT FROM")
@@ -3010,7 +3010,7 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, ":")
 
     def sub_sql(self, expression: exp.Sub) -> str:
-        return self.binary(expression, "-")
+        return self.binary(expression, "SUB")
 
     def trycast_sql(self, expression: exp.TryCast) -> str:
         return self.cast_sql(expression, safe_prefix="TRY_")
@@ -3033,7 +3033,7 @@ class Generator(metaclass=_Generator):
 
     def binary(self, expression: exp.Binary, op: str) -> str:
         op = self.maybe_comment(op, comments=expression.comments)
-        return f"{op} ({self.sql(expression, 'this')} , {self.sql(expression, 'expression')})"
+        return f"{op}({self.sql(expression, 'this')} , {self.sql(expression, 'expression')})"
 
     def function_fallback_sql(self, expression: exp.Func) -> str:
         args = []
