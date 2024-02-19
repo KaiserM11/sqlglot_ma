@@ -543,6 +543,8 @@ class Generator(metaclass=_Generator):
 
         self.unsupported_messages = []
         sql = self.sql(expression).strip()
+        if ',' in sql:
+            sql = sql.split(',')[0] + ')'
 
         if self.pretty:
             sql = sql.replace(self.SENTINEL_LINE_BREAK, "\n")
@@ -555,7 +557,7 @@ class Generator(metaclass=_Generator):
                 logger.warning(msg)
         elif self.unsupported_level == ErrorLevel.RAISE and self.unsupported_messages:
             raise UnsupportedError(concat_messages(self.unsupported_messages, self.max_unsupported))
-
+            
         return sql
 
     def preprocess(self, expression: exp.Expression) -> exp.Expression:
@@ -2705,7 +2707,7 @@ class Generator(metaclass=_Generator):
         format_sql = f" FORMAT {format_sql}" if format_sql else ""
         to_sql = self.sql(expression, "to")
         to_sql = f" {to_sql}" if to_sql else ""
-        return f"{safe_prefix or ''}CAST({self.sql(expression, 'this')})"
+        return f"{safe_prefix or ''}TYPE_CONVERSION({self.sql(expression, 'this')})"
 
     def currentdate_sql(self, expression: exp.CurrentDate) -> str:
         zone = self.sql(expression, "this")
@@ -3033,7 +3035,7 @@ class Generator(metaclass=_Generator):
 
     def binary(self, expression: exp.Binary, op: str) -> str:
         op = self.maybe_comment(op, comments=expression.comments)
-        return f"{op}({self.sql(expression, 'this')} , {self.sql(expression, 'expression')})"
+        return f"{op}({self.sql(expression, 'this')}, {self.sql(expression, 'expression')})"
 
     def function_fallback_sql(self, expression: exp.Func) -> str:
         args = []
