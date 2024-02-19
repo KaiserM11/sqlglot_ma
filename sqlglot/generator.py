@@ -3033,10 +3033,14 @@ class Generator(metaclass=_Generator):
         this = f" {this}" if this else ""
         return f"USE{kind}{this}"
 
+
+# Reformats the binary expressions like, multiply, divide, add, subtract, comparison operators. To the general formatting of x + y.
     def binary(self, expression: exp.Binary, op: str) -> str:
         op = self.maybe_comment(op, comments=expression.comments)
         return f"{op}({self.sql(expression, 'this')}, {self.sql(expression, 'expression')})"
 
+
+# Extracts function information that is later passed onto the "func" function.
     def function_fallback_sql(self, expression: exp.Func) -> str:
         args = []
 
@@ -3056,6 +3060,7 @@ class Generator(metaclass=_Generator):
 
         return self.func(name, *args)
 
+#Formats the information gathered into a general syntax. FUNCTION(arg1, arg2, agr3,....) 
     def func(
         self,
         name: str,
@@ -3064,7 +3069,8 @@ class Generator(metaclass=_Generator):
         suffix: str = ")",
     ) -> str:
         first_arg = args[0] if args else None
-        return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}{suffix}"
+        second_arg = args[1] if args else None
+        return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}, {self.format_args(second_arg)}{suffix}"
 
     def format_args(self, *args: t.Optional[str | exp.Expression]) -> str:
         arg_sqls = tuple(self.sql(arg) for arg in args if arg is not None)
