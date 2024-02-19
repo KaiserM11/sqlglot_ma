@@ -3063,7 +3063,7 @@ class Generator(metaclass=_Generator):
         prefix: str = "(",
         suffix: str = ")",
     ) -> str:
-        return f"{self.normalize_func(name)}{prefix}{self.format_args(*args)}{suffix}"
+        return f"{self.normalize_func(name)}{prefix}{self.format_args(*args[0])}{suffix}"
 
     def format_args(self, *args: t.Optional[str | exp.Expression]) -> str:
         arg_sqls = tuple(self.sql(arg) for arg in args if arg is not None)
