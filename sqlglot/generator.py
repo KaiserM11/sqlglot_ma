@@ -2332,18 +2332,18 @@ class Generator(metaclass=_Generator):
 
     def case_sql(self, expression: exp.Case) -> str:
         this = self.sql(expression, "this")
-        statements = [f"CASE {this}" if this else "CASE"]
+        statements = [f"IFTHENELSE {this}" if this else "IFTHENELSE"]
 
         for e in expression.args["ifs"]:
-            statements.append(f"WHEN {self.sql(e, 'this')}")
-            statements.append(f"THEN {self.sql(e, 'true')}")
+            statements.append(f"{self.sql(e, 'this')}")
+            statements.append(f"{self.sql(e, 'true')}")
 
         default = self.sql(expression, "default")
 
-        if default:
-            statements.append(f"ELSE {default}")
+        #if default:
+        #    statements.append(f"ELSE {default}")
 
-        statements.append("END")
+        #statements.append("END")
 
         if self.pretty and self.text_width(statements) > self.max_text_width:
             return self.indent("\n".join(statements), skip_first=True, skip_last=True)
