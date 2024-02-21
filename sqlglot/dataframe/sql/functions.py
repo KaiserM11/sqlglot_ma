@@ -760,11 +760,11 @@ def unbase64(col: ColumnOrLiteral) -> Column:
 
 
 def ltrim(col: ColumnOrName) -> Column:
-    return Column.invoke_anonymous_function(col, "LTRIM")
+    return Column.invoke_anonymous_function(col, expression.Ltrim)
 
 
 def rtrim(col: ColumnOrName) -> Column:
-    return Column.invoke_anonymous_function(col, "RTRIM")
+    return Column.invoke_anonymous_function(col, expression.Rtrim)
 
 
 def trim(col: ColumnOrName) -> Column:

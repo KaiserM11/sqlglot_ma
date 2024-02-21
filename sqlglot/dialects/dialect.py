@@ -818,6 +818,39 @@ def trim_sql(self: Generator, expression: exp.Trim) -> str:
     collation = f" COLLATE {collation}" if collation else ""
     return f"TRIM({trim_type}{remove_chars}{from_part}{target}{collation})"
 
+def ltrim_sql(self: Generator, expression: exp.Ltrim) -> str:
+    target = self.sql(expression, "this")
+    trim_type = self.sql(expression, "position")
+    remove_chars = self.sql(expression, "expression")
+    collation = self.sql(expression, "collation")
+
+    # Use TRIM/LTRIM/RTRIM syntax if the expression isn't database-specific
+    if not remove_chars and not collation:
+        return self.trim_sql(expression)
+
+    trim_type = f"{trim_type} " if trim_type else ""
+    remove_chars = f"{remove_chars} " if remove_chars else ""
+    from_part = "FROM " if trim_type or remove_chars else ""
+    collation = f" COLLATE {collation}" if collation else ""
+    return f"LTRIM({trim_type}{remove_chars}{from_part}{target}{collation})"
+
+
+def rtrim_sql(self: Generator, expression: exp.Rtrim) -> str:
+    target = self.sql(expression, "this")
+    trim_type = self.sql(expression, "position")
+    remove_chars = self.sql(expression, "expression")
+    collation = self.sql(expression, "collation")
+
+    # Use TRIM/LTRIM/RTRIM syntax if the expression isn't database-specific
+    if not remove_chars and not collation:
+        return self.trim_sql(expression)
+
+    trim_type = f"{trim_type} " if trim_type else ""
+    remove_chars = f"{remove_chars} " if remove_chars else ""
+    from_part = "FROM " if trim_type or remove_chars else ""
+    collation = f" COLLATE {collation}" if collation else ""
+    return f"RTRIM({trim_type}{remove_chars}{from_part}{target}{collation})"
+
 
 def str_to_time_sql(self: Generator, expression: exp.Expression) -> str:
     return self.func("STRPTIME", expression.this, self.format_time(expression))

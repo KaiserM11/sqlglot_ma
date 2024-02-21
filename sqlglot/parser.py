@@ -891,6 +891,8 @@ class Parser(metaclass=_Parser):
         "STRING_AGG": lambda self: self._parse_string_agg(),
         "SUBSTRING": lambda self: self._parse_substring(),
         "TRIM": lambda self: self._parse_trim(),
+        "LTRIM": lambda self: self._parse_rtrim(),
+        "RTRIM": lambda self: self._parse_ltrim(),
         "TRY_CAST": lambda self: self._parse_cast(False, safe=True),
         "TRY_CONVERT": lambda self: self._parse_convert(False, safe=True),
     }
@@ -4949,6 +4951,53 @@ class Parser(metaclass=_Parser):
 
         return self.expression(
             exp.Trim, this=this, position=position, expression=expression, collation=collation
+        )
+    
+
+    def _parse_rtrim(self) -> exp.Rtrim:
+        position = None
+        collation = None
+        expression = None
+
+        if self._match_texts(self.TRIM_TYPES):
+            position = self._prev.text.upper()
+
+        this = self._parse_bitwise()
+        if self._match_set((TokenType.FROM, TokenType.COMMA)):
+            invert_order = self._prev.token_type == TokenType.FROM or self.TRIM_PATTERN_FIRST
+            expression = self._parse_bitwise()
+
+            if invert_order:
+                this, expression = expression, this
+
+        if self._match(TokenType.COLLATE):
+            collation = self._parse_bitwise()
+
+        return self.expression(
+            exp.Rtrim, this=this, expression=expression
+        )
+        
+    def _parse_ltrim(self) -> exp.Ltrim:
+        position = None
+        collation = None
+        expression = None
+
+        if self._match_texts(self.TRIM_TYPES):
+            position = self._prev.text.upper()
+
+        this = self._parse_bitwise()
+        if self._match_set((TokenType.FROM, TokenType.COMMA)):
+            invert_order = self._prev.token_type == TokenType.FROM or self.TRIM_PATTERN_FIRST
+            expression = self._parse_bitwise()
+
+            if invert_order:
+                this, expression = expression, this
+
+        if self._match(TokenType.COLLATE):
+            collation = self._parse_bitwise()
+
+        return self.expression(
+            exp.Ltrim, this=this, expression=expression
         )
 
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:

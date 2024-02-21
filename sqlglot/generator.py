@@ -2335,7 +2335,7 @@ class Generator(metaclass=_Generator):
         statements = [f"IFTHENELSE {this}" if this else "IFTHENELSE"]
 
         for e in expression.args["ifs"]:
-            statements.append(f"({self.sql(e, 'this')},")
+            statements.append(f"{self.sql(e, 'this')},")
             statements.append(f"{self.sql(e, 'true')}")
 
         default = self.sql(expression, "default")
@@ -2348,7 +2348,7 @@ class Generator(metaclass=_Generator):
         if self.pretty and self.text_width(statements) > self.max_text_width:
             return self.indent("\n".join(statements), skip_first=True, skip_last=True)
 
-        return " ".join(statements)
+        return "".join(statements)
 
     def constraint_sql(self, expression: exp.Constraint) -> str:
         this = self.sql(expression, "this")
@@ -2374,7 +2374,13 @@ class Generator(metaclass=_Generator):
             return self.func("RTRIM", expression.this)
         else:
             return self.func("TRIM", expression.this, expression.expression)
-
+        
+    def ltrim_sql(self, expression: exp.Ltrim) ->  str:
+        return self.func("LTRIM", expression.this)
+    
+    def rtrim_sql(self, expression: exp.Rtrim) -> str:
+        return self.func("RTRIM", expression.this)
+        
     def convert_concat_args(self, expression: exp.Concat | exp.ConcatWs) -> t.List[exp.Expression]:
         args = expression.expressions
         if isinstance(expression, exp.ConcatWs):

@@ -5444,6 +5444,22 @@ class Trim(Func):
         "collation": False,
     }
 
+class Rtrim(Func):
+    arg_types = {
+        "this": True,
+        "expression": False,
+        "position": False,
+        "collation": False,
+    }
+
+class Ltrim(Func):
+    arg_types = {
+        "this": True,
+        "expression": False,
+        "position": False,
+        "collation": False,
+    }
+
 
 class TsOrDsAdd(Func, TimeUnit):
     # return_type is used to correctly cast the arguments of this expression when transpiling it
