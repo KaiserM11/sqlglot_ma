@@ -826,7 +826,7 @@ def ltrim_sql(self: Generator, expression: exp.Ltrim) -> str:
 
     # Use TRIM/LTRIM/RTRIM syntax if the expression isn't database-specific
     if not remove_chars and not collation:
-        return self.trim_sql(expression)
+        return self.ltrim_sql(expression)
 
     trim_type = f"{trim_type} " if trim_type else ""
     remove_chars = f"{remove_chars} " if remove_chars else ""
@@ -843,13 +843,21 @@ def rtrim_sql(self: Generator, expression: exp.Rtrim) -> str:
 
     # Use TRIM/LTRIM/RTRIM syntax if the expression isn't database-specific
     if not remove_chars and not collation:
-        return self.trim_sql(expression)
+        return self.rtrim_sql(expression)
 
     trim_type = f"{trim_type} " if trim_type else ""
     remove_chars = f"{remove_chars} " if remove_chars else ""
     from_part = "FROM " if trim_type or remove_chars else ""
     collation = f" COLLATE {collation}" if collation else ""
     return f"RTRIM({trim_type}{remove_chars}{from_part}{target}{collation})"
+
+def replace_sql(self: Generator, expression: exp.Replace) -> str:
+    target = self.sql(expression, "position")
+    string_r = self.sql(expression, "this")
+    r_with = self.sql(expression, "expression")
+
+
+    return f"REPLACE({string_r}{r_with}{target})"
 
 
 def str_to_time_sql(self: Generator, expression: exp.Expression) -> str:

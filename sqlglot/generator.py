@@ -2375,6 +2375,9 @@ class Generator(metaclass=_Generator):
         else:
             return self.func("TEXT_TRIM", expression.this, expression.expression)
         
+    def replace_sql(self, expression: exp.Replace) -> str:
+        return self.func("TEXT_REPLACE", expression.this, expression.expression)
+        
     def ltrim_sql(self, expression: exp.Ltrim) ->  str:
         return self.func("TEXT_TRIM", expression.this)
     

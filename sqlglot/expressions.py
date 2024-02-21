@@ -5294,6 +5294,9 @@ class Round(Func):
     arg_types = {"this": True, "decimals": False, "truncate": False}
 
 
+class Replace(Func):
+    arg_types = {"this": True, "expression": True, "position":True, "collation":False }
+
 class RowNumber(Func):
     arg_types: t.Dict[str, t.Any] = {}
 
@@ -5459,7 +5462,6 @@ class Ltrim(Func):
         "position": False,
         "collation": False,
     }
-
 
 class TsOrDsAdd(Func, TimeUnit):
     # return_type is used to correctly cast the arguments of this expression when transpiling it

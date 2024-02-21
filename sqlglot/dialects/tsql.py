@@ -18,7 +18,8 @@ from sqlglot.dialects.dialect import (
     timestrtotime_sql,
     trim_sql,
     rtrim_sql,
-    ltrim_sql
+    ltrim_sql,
+    replace_sql
 )
 from sqlglot.expressions import DataType
 from sqlglot.helper import seq_get
@@ -772,6 +773,7 @@ class TSQL(Dialect):
             exp.Trim: trim_sql,
             exp.Rtrim: rtrim_sql,
             exp.Ltrim: ltrim_sql,
+            exp.Replace: replace_sql,
             exp.TsOrDsAdd: date_delta_sql("DATEADD", cast=True),
             exp.TsOrDsDiff: date_delta_sql("DATEDIFF"),
         }

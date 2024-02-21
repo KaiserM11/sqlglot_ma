@@ -4953,7 +4953,31 @@ class Parser(metaclass=_Parser):
             exp.Trim, this=this, position=position, expression=expression, collation=collation
         )
     
+    
+    
+    def _parse_replace2(self) -> exp.Replace:
+        position = None
+        collation = None
+        expression = None
 
+        if self._match_texts(self.TRIM_TYPES):
+            position = self._prev.text.upper()
+
+        this = self._parse_bitwise()
+        if self._match_set((TokenType.FROM, TokenType.COMMA)):
+            invert_order = self._prev.token_type == TokenType.FROM or self.TRIM_PATTERN_FIRST
+            expression = self._parse_bitwise()
+
+            if invert_order:
+                this, expression = expression, this
+
+        if self._match(TokenType.COLLATE):
+            collation = self._parse_bitwise()
+
+        return self.expression(
+            exp.Replace, this=this, position=position, expression=expression, collation=collation
+        )
+    
     def _parse_rtrim(self) -> exp.Rtrim:
         position = None
         collation = None
@@ -4999,7 +5023,7 @@ class Parser(metaclass=_Parser):
         return self.expression(
             exp.Ltrim, this=this, expression=expression
         )
-
+    
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:
         return self._match(TokenType.WINDOW) and self._parse_csv(self._parse_named_window)
 
@@ -5034,7 +5058,7 @@ class Parser(metaclass=_Parser):
                 exp.Filter, this=this, expression=self._parse_where(skip_where_token=True)
             )
             self._match_r_paren()
-
+ 
         # T-SQL allows the OVER (...) syntax after WITHIN GROUP.
         # https://learn.microsoft.com/en-us/sql/t-sql/functions/percentile-disc-transact-sql?view=sql-server-ver16
         if self._match_text_seq("WITHIN", "GROUP"):

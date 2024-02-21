@@ -760,11 +760,11 @@ def unbase64(col: ColumnOrLiteral) -> Column:
 
 
 def ltrim(col: ColumnOrName) -> Column:
-    return Column.invoke_anonymous_function(col, expression.Ltrim)
+    return Column.invoke_expression_over_column(col, expression.Ltrim)
 
 
 def rtrim(col: ColumnOrName) -> Column:
-    return Column.invoke_anonymous_function(col, expression.Rtrim)
+    return Column.invoke_expression_over_column(col, expression.Rtrim)
 
 
 def trim(col: ColumnOrName) -> Column:
@@ -926,6 +926,10 @@ def bit_length(col: ColumnOrName) -> Column:
 
 def translate(srcCol: ColumnOrName, matching: str, replace: str) -> Column:
     return Column.invoke_anonymous_function(srcCol, "TRANSLATE", lit(matching), lit(replace))
+
+
+def replace(col: ColumnOrName) -> Column:
+    return Column.invoke_expression_over_column(col, expression.Replace)
 
 
 def array(*cols: t.Union[ColumnOrName, t.Iterable[ColumnOrName]]) -> Column:
