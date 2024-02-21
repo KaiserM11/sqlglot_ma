@@ -857,7 +857,7 @@ def replace_sql(self: Generator, expression: exp.Replace) -> str:
     r_with = self.sql(expression, "expression")
 
 
-    return f"REPLACE({string_r}{r_with}{target})"
+    return f"TEXT_REPLACE({string_r}, {r_with}, {target})"
 
 
 def str_to_time_sql(self: Generator, expression: exp.Expression) -> str:
