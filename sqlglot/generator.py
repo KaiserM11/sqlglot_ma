@@ -85,7 +85,7 @@ class Generator(metaclass=_Generator):
         exp.CommentColumnConstraint: lambda self, e: f"COMMENT {self.sql(e, 'this')}",
         exp.CopyGrantsProperty: lambda self, e: "COPY GRANTS",
         exp.DateAdd: lambda self, e: self.func(
-            "DATE_ADD", e.this, e.expression, exp.Literal.string(e.text("unit"))
+            "DATETIME_ADDITION", e.this, e.expression, exp.Literal.string(e.text("unit"))
         ),
         exp.DateFormatColumnConstraint: lambda self, e: f"FORMAT {self.sql(e, 'this')}",
         exp.DefaultColumnConstraint: lambda self, e: f"DEFAULT {self.sql(e, 'this')}",
@@ -2332,7 +2332,7 @@ class Generator(metaclass=_Generator):
 
     def case_sql(self, expression: exp.Case) -> str:
         this = self.sql(expression, "this")
-        statements = [f"IFTHENELSE {this}" if this else "IFTHENELSE"]
+        statements = [f"IFTHENELSE( {this}" if this else "IFTHENELSE"]
 
         for e in expression.args["ifs"]:
             statements.append(f"{self.sql(e, 'this')},")
@@ -2404,7 +2404,7 @@ class Generator(metaclass=_Generator):
         if not self.SUPPORTS_SINGLE_ARG_CONCAT and len(expressions) == 1:
             return self.sql(expressions[0])
 
-        return self.func("CONCAT", *expressions)
+        return self.func("TEXT_COMBINE", expressions[0], expressions[1])
 
     def concatws_sql(self, expression: exp.ConcatWs) -> str:
         return self.func(
