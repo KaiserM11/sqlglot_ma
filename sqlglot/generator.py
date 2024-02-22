@@ -2583,7 +2583,7 @@ class Generator(metaclass=_Generator):
         else:
             in_sql = f"({self.expressions(expression, flat=True)})"
 
-        return f"{self.sql(expression, 'this')}{is_global} IN {in_sql}"
+        return f"COMPARE({self.sql(expression, 'this')}, {in_sql})"
 
     def in_unnest_op(self, unnest: exp.Unnest) -> str:
         return f"(SELECT {self.sql(unnest)})"
