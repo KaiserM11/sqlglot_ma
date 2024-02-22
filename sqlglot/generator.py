@@ -2332,15 +2332,16 @@ class Generator(metaclass=_Generator):
 
     def case_sql(self, expression: exp.Case) -> str:
         this = self.sql(expression, "this")
-        statements = [f"IFTHENELSE( {this}" if this else "IFTHENELSE"]
+        statements = [f"IFTHENELSE( {this}" if this else "IFTHENELSE("]
 
         for e in expression.args["ifs"]:
             statements.append(f"{self.sql(e, 'this')},")
-            statements.append(f"{self.sql(e, 'true')}")
+            statements.append(f"{self.sql(e, 'true')},")
 
         default = self.sql(expression, "default")
 
         if default:
+            statements[-1].strip(",")
             statements.append(f")")
 
         #statements.append("END")
