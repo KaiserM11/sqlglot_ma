@@ -2341,7 +2341,7 @@ class Generator(metaclass=_Generator):
         default = self.sql(expression, "default")
 
         if default:
-            statements[-1].strip(",")
+            statements[-1] = statements[:-1]
             statements.append(f")")
 
         #statements.append("END")
