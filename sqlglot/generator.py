@@ -2405,7 +2405,7 @@ class Generator(metaclass=_Generator):
         if not self.SUPPORTS_SINGLE_ARG_CONCAT and len(expressions) == 1:
             return self.sql(expressions[0])
 
-        return f"TEXT_COMBINE({variables})"
+        return self.func("CONCAT", *expressions)
 
     def concatws_sql(self, expression: exp.ConcatWs) -> str:
         return self.func(

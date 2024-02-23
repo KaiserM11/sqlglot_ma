@@ -735,7 +735,7 @@ class TSQL(Dialect):
             **generator.Generator.TRANSFORMS,
             exp.AnyValue: any_value_to_max_sql,
             exp.AutoIncrementColumnConstraint: lambda *_: "IDENTITY",
-            exp.DateAdd: date_delta_sql("DATEADD"),
+            exp.DateAdd: date_delta_sql("DATETIME_ADDITION"),
             exp.DateDiff: date_delta_sql("DATEDIFF"),
             exp.CTE: transforms.preprocess([qualify_derived_table_outputs]),
             exp.CurrentDate: rename_func("GETDATE"),
