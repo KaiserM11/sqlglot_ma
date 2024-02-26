@@ -3077,7 +3077,7 @@ class Generator(metaclass=_Generator):
         suffix: str = ")",
     ) -> str:
         first_arg = args[0] if args else None
-        if name  in ["CONCAT", "IIF", "IF"]:
+        if name  in ["CONCAT", "IIF", "IF", "IFTHENELSE"]:
             return f"{self.normalize_func(name)}{prefix}{self.format_args(*args)}{suffix}"
         elif name == "NULLIF":
             return f"IFTHENELSE{prefix}{self.format_args(*args)}, NULL{suffix}"
