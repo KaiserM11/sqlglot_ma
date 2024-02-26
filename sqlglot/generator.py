@@ -2984,10 +2984,10 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "IS")
 
     def like_sql(self, expression: exp.Like) -> str:
-        return self.binary(expression, "LIKE")
+        return self.binary(expression, "COMPARE")
 
     def likeany_sql(self, expression: exp.LikeAny) -> str:
-        return self.binary(expression, "LIKE ANY")
+        return self.binary(expression, "COMPARE")
 
     def similarto_sql(self, expression: exp.SimilarTo) -> str:
         return self.binary(expression, "SIMILAR TO")
