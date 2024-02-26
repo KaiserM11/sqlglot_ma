@@ -2432,8 +2432,8 @@ class Generator(metaclass=_Generator):
         options = f" {options}" if options else ""
         return f"PRIMARY KEY ({expressions}){options}"
 
-    def if_sql(self, expression: exp.If) -> str:
-        return self.case_sql(exp.Case(ifs=[expression], default=expression.args.get("false")))
+    #def if_sql(self, expression: exp.If) -> str:
+    #    return self.case_sql(exp.Case(ifs=[expression], default=expression.args.get("false")))
 
     def matchagainst_sql(self, expression: exp.MatchAgainst) -> str:
         modifier = expression.args.get("modifier")
@@ -3077,7 +3077,7 @@ class Generator(metaclass=_Generator):
         suffix: str = ")",
     ) -> str:
         first_arg = args[0] if args else None
-        if name  =="CONCAT":
+        if name  in ["CONCAT", "IF"]:
             return f"{self.normalize_func(name)}{prefix}{self.format_args(*args)}{suffix}"
         elif name == "NULLIF":
             return f"IFTHENELSE{prefix}{self.format_args(*args)}, NULL{suffix}"
