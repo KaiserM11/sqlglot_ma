@@ -3077,6 +3077,7 @@ class Generator(metaclass=_Generator):
         suffix: str = ")",
     ) -> str:
         first_arg = args[0] if args else None
+        if name in ["CONCAT", "COALESCE"]
         return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}{suffix}"
 
     def format_args(self, *args: t.Optional[str | exp.Expression]) -> str:
