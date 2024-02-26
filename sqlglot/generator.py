@@ -3045,7 +3045,10 @@ class Generator(metaclass=_Generator):
 # Reformats the binary expressions like, multiply, divide, add, subtract, comparison operators. To the general formatting of x + y.
     def binary(self, expression: exp.Binary, op: str) -> str:
         op = self.maybe_comment(op, comments=expression.comments)
-        return f"{op}({self.sql(expression, 'this')}, {self.sql(expression, 'expression')})"
+        if "Not" in self.sql(expression, "this"):
+            return f"{op}({self.sql(expression.this, 'this')}, {self.sql(expression, 'expression')})"
+        else:
+            return f"{op}({self.sql(expression, 'this')}, {self.sql(expression, 'expression')})"
 
 
 # Extracts function information that is later passed onto the "func" function.
