@@ -743,7 +743,7 @@ class TSQL(Dialect):
             exp.Extract: rename_func("DATEPART"),
             exp.GeneratedAsIdentityColumnConstraint: generatedasidentitycolumnconstraint_sql,
             exp.GroupConcat: _string_agg_sql,
-            exp.If: rename_func("IIF"),
+            exp.If: rename_func("IFTHENELSE"),
             exp.JSONExtract: _json_extract_sql,
             exp.JSONExtractScalar: _json_extract_sql,
             exp.LastDay: lambda self, e: self.func("EOMONTH", e.this),
