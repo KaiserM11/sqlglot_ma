@@ -2965,10 +2965,10 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "GLOB")
 
     def gt_sql(self, expression: exp.GT) -> str:
-        return self.binary(expression, "GT")
+        return self.binary(expression, "COMPARE")
 
     def gte_sql(self, expression: exp.GTE) -> str:
-        return self.binary(expression, "GTE")
+        return self.binary(expression, "COMPARE")
 
     def ilike_sql(self, expression: exp.ILike) -> str:
         return self.binary(expression, "ILIKE")
@@ -2993,10 +2993,10 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "SIMILAR TO")
 
     def lt_sql(self, expression: exp.LT) -> str:
-        return self.binary(expression, "LT")
+        return self.binary(expression, "COMPARE")
 
     def lte_sql(self, expression: exp.LTE) -> str:
-        return self.binary(expression, "LTE")
+        return self.binary(expression, "COMPARE")
 
     def mod_sql(self, expression: exp.Mod) -> str:
         return self.binary(expression, "MOD")
@@ -3005,7 +3005,7 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "MUL")
 
     def neq_sql(self, expression: exp.NEQ) -> str:
-        return self.binary(expression, "NEQ")
+        return self.binary(expression, "COMPARE")
 
     def nullsafeeq_sql(self, expression: exp.NullSafeEQ) -> str:
         return self.binary(expression, "IS NOT DISTINCT FROM")
