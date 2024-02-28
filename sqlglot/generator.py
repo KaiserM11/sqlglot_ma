@@ -3084,7 +3084,7 @@ class Generator(metaclass=_Generator):
         name: str,
         *args: t.Optional[exp.Expression | str],
         prefix: str = "(",
-        suffix: str = ")",s
+        suffix: str = ")",
     ) -> str:
         first_arg = args[0] if args else None
         last_arg = args[-1] if args else None
