@@ -2995,6 +2995,8 @@ class Generator(metaclass=_Generator):
         return self.binary(expression, "SIMILAR TO")
 
     def lt_sql(self, expression: exp.LT) -> str:
+        if isinstance(expression.this, exp.Not):
+            return f'COMPARE({expression.this.this.this}, {expression.expression})'
         return self.binary(expression, "COMPARE")
 
     def lte_sql(self, expression: exp.LTE) -> str:
