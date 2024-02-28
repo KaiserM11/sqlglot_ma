@@ -739,7 +739,7 @@ class TSQL(Dialect):
             exp.Month: rename_func("DATETIME_INTERVAL"),
             exp.Year: rename_func("DATETIME_INTERVAL"),
             exp.DateAdd: date_delta_sql("DATETIME_ADDITION"),
-            exp.DateDiff: date_delta_sql("DATEDIFF"),
+            exp.DateDiff: date_delta_sql("DATETIME_DIFFERENCE"),
             exp.CTE: transforms.preprocess([qualify_derived_table_outputs]),
             exp.CurrentDate: rename_func("GETDATE"),
             exp.CurrentTimestamp: rename_func("GETDATE"),

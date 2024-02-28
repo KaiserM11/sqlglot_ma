@@ -3090,6 +3090,10 @@ class Generator(metaclass=_Generator):
             return f"IFTHENELSE{prefix}{self.format_args(*args)}, NULL{suffix}"
         elif name == "COALESCE":
             return f"IFTHENELSE{prefix}{self.format_args(*args)}{suffix}"
+        elif name == "DATETIME_ADDITION":
+            return f'DATETIME_ADDITION{prefix}{self.format_args(args[-1])}{suffix}'
+        elif name == "DATETIME_DIFFERENCE":
+            return f'DATETIME_DIFFERENCE{prefix}{self.format_args(args[-2])},{self.format_args(args[-1])}{suffix}'
         else:
             return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}{suffix}"
 
