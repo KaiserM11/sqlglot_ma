@@ -3081,9 +3081,10 @@ class Generator(metaclass=_Generator):
         name: str,
         *args: t.Optional[exp.Expression | str],
         prefix: str = "(",
-        suffix: str = ")",
+        suffix: str = ")",s
     ) -> str:
         first_arg = args[0] if args else None
+        last_arg = args[-1] if args else None
         if name  in ["CONCAT", "IIF", "IF", "IFTHENELSE"]:
             return f"{self.normalize_func(name)}{prefix}{self.format_args(*args)}{suffix}"
         elif name == "NULLIF":
@@ -3091,9 +3092,9 @@ class Generator(metaclass=_Generator):
         elif name == "COALESCE":
             return f"IFTHENELSE{prefix}{self.format_args(*args)}{suffix}"
         elif name == "DATETIME_ADDITION":
-            return f'DATETIME_ADDITION{prefix}{self.format_args(args[-1])}{suffix}'
+            return f'DATETIME_ADDITION{prefix}{self.format_args(last_arg)}{suffix}'
         elif name == "DATETIME_DIFFERENCE":
-            return f'DATETIME_DIFFERENCE{prefix}{self.format_args(args[-2])},{self.format_args(args[-1])}{suffix}'
+            return f'DATETIME_DIFFERENCE{prefix}{self.format_args(args[-2].this)},{self.format_args(args[-1].this)}{suffix}'
         else:
             return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}{suffix}"
 
