@@ -2966,7 +2966,7 @@ class Generator(metaclass=_Generator):
 
     def gt_sql(self, expression: exp.GT) -> str:
         if isinstance(expression.this, exp.Not):
-            return f'COMPARE({expression.this.this}, {expression.expression})'
+            return f'COMPARE({expression.this.this.this}, {expression.expression})'
         return self.binary(expression, "COMPARE")
 
     def gte_sql(self, expression: exp.GTE) -> str:
