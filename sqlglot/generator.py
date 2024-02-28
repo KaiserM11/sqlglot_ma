@@ -3025,6 +3025,9 @@ class Generator(metaclass=_Generator):
 
     def sub_sql(self, expression: exp.Sub) -> str:
         return self.binary(expression, "SUB")
+    
+    def timetostr_sql(self, expression: exp.TimeToStr) -> str:
+        return f'DATETIME_INTERVAL({expression.this.this})'
 
     def trycast_sql(self, expression: exp.TryCast) -> str:
         return self.cast_sql(expression, safe_prefix="TRY_")
@@ -3094,7 +3097,7 @@ class Generator(metaclass=_Generator):
         elif name == "DATETIME_ADDITION":
             return f'DATETIME_ADDITION{prefix}{self.format_args(last_arg)}{suffix}'
         elif name == "DATETIME_DIFFERENCE":
-            return f'DATETIME_DIFFERENCE{prefix}{self.format_args(args[-2].this)},{self.format_args(args[-1].this)}{suffix}'
+            return f'DATETIME_DIFFERENCE{prefix}{self.format_args(args[-2])},{self.format_args(args[-1])}{suffix}'
         else:
             return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}{suffix}"
 
