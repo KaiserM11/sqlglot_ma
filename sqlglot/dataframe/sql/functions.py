@@ -82,6 +82,9 @@ def max(col: ColumnOrName) -> Column:
 def min(col: ColumnOrName) -> Column:
     return Column.invoke_expression_over_column(col, expression.Min)
 
+def toint(col: ColumnOrName) -> Column:
+    return Column.invoke_expression_over_column(col, expression.To_Int)
+
 
 def max_by(col: ColumnOrName, ord: ColumnOrName) -> Column:
     return Column.invoke_expression_over_column(col, expression.ArgMax, expression=ord)

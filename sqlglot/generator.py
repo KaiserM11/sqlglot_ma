@@ -2384,6 +2384,9 @@ class Generator(metaclass=_Generator):
     
     def rtrim_sql(self, expression: exp.Rtrim) -> str:
         return self.func("TEXT_TRIM", expression.this)
+    
+    def toint_sql(self, expression: exp.To_Int) -> str:
+        return self.func("INT", expression.this)
         
     def convert_concat_args(self, expression: exp.Concat | exp.ConcatWs) -> t.List[exp.Expression]:
         args = expression.expressions

@@ -5024,6 +5024,12 @@ class Parser(metaclass=_Parser):
             exp.Ltrim, this=this, expression=expression
         )
     
+    def _parse_toint(self) -> exp.To_Int:
+        this = self._parse_bitwise()
+        return self.expression(
+            exp.To_Int, this = this
+            )
+
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:
         return self._match(TokenType.WINDOW) and self._parse_csv(self._parse_named_window)
 

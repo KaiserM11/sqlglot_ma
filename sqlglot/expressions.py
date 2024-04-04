@@ -5378,6 +5378,10 @@ class NumberToStr(Func):
     arg_types = {"this": True, "format": True, "culture": False}
 
 
+class To_Int(Func):
+    arg_types = {"this": True, "expression": False}
+
+
 class FromBase(Func):
     arg_types = {"this": True, "expression": True}
 

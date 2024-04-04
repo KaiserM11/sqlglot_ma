@@ -17,6 +17,11 @@ from sqlglot.dialects.dialect import (
     rename_func,
     timestrtotime_sql,
     trim_sql,
+    rtrim_sql,
+    ltrim_sql,
+    toint_sql,
+    replace_sql
+
 )
 from sqlglot.expressions import DataType
 from sqlglot.helper import seq_get
@@ -770,6 +775,10 @@ class HANA(Dialect):
             exp.Trim: trim_sql,
             exp.TsOrDsAdd: date_delta_sql("DATEADD", cast=True),
             exp.TsOrDsDiff: date_delta_sql("DATEDIFF"),
+            exp.Rtrim: rtrim_sql,
+            exp.Ltrim: ltrim_sql,
+            exp.Replace: replace_sql,
+            exp.To_Int: toint_sql
         }
 
         TRANSFORMS.pop(exp.ReturnsProperty)

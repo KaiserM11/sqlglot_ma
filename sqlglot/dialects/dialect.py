@@ -859,6 +859,8 @@ def replace_sql(self: Generator, expression: exp.Replace) -> str:
 
     return f"TEXT_REPLACE({string_r}, {r_with}, {target})"
 
+def toint_sql(self: Generator, expression: exp.To_Int) -> str:
+    return self.func("INT", expression.this)
 
 def str_to_time_sql(self: Generator, expression: exp.Expression) -> str:
     return self.func("STRPTIME", expression.this, self.format_time(expression))
