@@ -893,6 +893,7 @@ class Parser(metaclass=_Parser):
         "TRIM": lambda self: self._parse_trim(),
         "LTRIM": lambda self: self._parse_rtrim(),
         "RTRIM": lambda self: self._parse_ltrim(),
+        "TO_INT": lambda self: self._parse_toint(),
         "TRY_CAST": lambda self: self._parse_cast(False, safe=True),
         "TRY_CONVERT": lambda self: self._parse_convert(False, safe=True),
     }
