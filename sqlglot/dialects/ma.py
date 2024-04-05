@@ -21,7 +21,8 @@ from sqlglot.dialects.dialect import (
     ltrim_sql,
     replace_sql,
     toint_sql,
-    todate_sql
+    todate_sql,
+    daysbetween_sql
 )
 from sqlglot.expressions import DataType
 from sqlglot.helper import seq_get
@@ -782,6 +783,7 @@ class MA(Dialect):
             exp.To_Int: toint_sql,
             exp.Replace: replace_sql,
             exp.To_Date: todate_sql,
+            exp.Days_Between: daysbetween_sql,
             exp.TsOrDsAdd: date_delta_sql("DATETIME_ADDITION", cast=True),
             exp.TsOrDsDiff: date_delta_sql("DATETIME_DIFFERENCE"),
         }

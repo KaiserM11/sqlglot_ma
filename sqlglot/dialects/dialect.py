@@ -858,8 +858,13 @@ def replace_sql(self: Generator, expression: exp.Replace) -> str:
     string_r = self.sql(expression, "this")
     r_with = self.sql(expression, "expression")
 
-
     return f"TEXT_REPLACE({string_r}, {r_with}, {target})"
+
+def daysbetween_sql(self: Generator, expression: exp.Days_Between) -> str:
+    fromdate = self.sql(expression, "this")
+    todate = self.sql(expression, "expression")
+
+    return self.func("DATETIME_DIFF", expression.this, expression.expression)
 
 def toint_sql(self: Generator, expression: exp.To_Int) -> str:
     variable = self.sql(expression, "this")

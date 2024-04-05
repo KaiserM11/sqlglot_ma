@@ -5448,6 +5448,8 @@ class TimeStrToUnix(Func):
 class To_Date(Func):
     arg_types = {"this": True, "expression": False}
 
+class Days_Between(Func):
+    arg_types = {"this": True, "expression": True}
 
 class Trim(Func):
     arg_types = {

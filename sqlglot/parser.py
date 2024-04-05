@@ -895,6 +895,7 @@ class Parser(metaclass=_Parser):
         "RTRIM": lambda self: self._parse_ltrim(),
         "TO_INT": lambda self: self._parse_toint(),
         "TO_DATE": lambda self: self._parse_todate(),
+        "DAYS_BETWEEN": lambda self: self._parse_daysbetween(),
         "TRY_CAST": lambda self: self._parse_cast(False, safe=True),
         "TRY_CONVERT": lambda self: self._parse_convert(False, safe=True),
     }
@@ -5036,6 +5037,11 @@ class Parser(metaclass=_Parser):
     def _parse_todate(self) -> exp.To_Date:
         this = self._parse_bitwise()
         return self.expression(exp.To_Date, this = this)
+    
+    def _parse_daysbetween(self) -> exp.Days_Between:
+        this = self._parse_bitwise()
+        expression = self._parse_bitwise()
+        return self.expression(exp.Days_Between, this = this, expression = expression)
 
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:
         return self._match(TokenType.WINDOW) and self._parse_csv(self._parse_named_window)
