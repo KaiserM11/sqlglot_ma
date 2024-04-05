@@ -5449,7 +5449,7 @@ class To_Date(Func):
     arg_types = {"this": True, "expression": False}
 
 class Days_Between(Func):
-    arg_types = {"this": True, "expression": True}
+    arg_types = {"this": True, "expression": False}
 
 class Trim(Func):
     arg_types = {
