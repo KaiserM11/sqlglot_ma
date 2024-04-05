@@ -5445,6 +5445,9 @@ class TimeStrToTime(Func):
 class TimeStrToUnix(Func):
     pass
 
+class To_Date(Func):
+    arg_types = {"this": True, "expression": False}
+
 
 class Trim(Func):
     arg_types = {

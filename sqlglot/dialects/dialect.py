@@ -865,6 +865,10 @@ def toint_sql(self: Generator, expression: exp.To_Int) -> str:
     variable = self.sql(expression, "this")
     return f"INT({variable})"
 
+def todate_sql(self: Generator, expression: exp.To_Date) ->str:
+    variable = self.sql(expression, "this")
+    return self.func("CONVERT", expression.this)
+
 def str_to_time_sql(self: Generator, expression: exp.Expression) -> str:
     return self.func("STRPTIME", expression.this, self.format_time(expression))
 

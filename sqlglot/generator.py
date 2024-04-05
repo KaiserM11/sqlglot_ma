@@ -2378,6 +2378,9 @@ class Generator(metaclass=_Generator):
         
     def replace_sql(self, expression: exp.Replace) -> str:
         return self.func("TEXT_REPLACE", expression.this, expression.expression)
+    
+    def todate_sql(self, expression: exp.To_Date) ->str:
+        return self.func("CONVERT", expression.this)
         
     def ltrim_sql(self, expression: exp.Ltrim) ->  str:
         return self.func("TEXT_TRIM", expression.this)

@@ -66,6 +66,9 @@ def desc(col: ColumnOrName):
 def broadcast(df: DataFrame) -> DataFrame:
     return df.hint("broadcast")
 
+def todate(col: ColumnOrName):
+    return Column.invoke_expression_over_column(col, expression.To_Date)
+
 
 def sqrt(col: ColumnOrName) -> Column:
     return Column.invoke_expression_over_column(col, expression.Sqrt)
