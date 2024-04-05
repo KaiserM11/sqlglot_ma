@@ -54,6 +54,7 @@ class Dialects(str, Enum):
     TSQL = "tsql"
     HANA = "hana"
     COLUMN = "column"
+    MA = "ma"
 
 class NormalizationStrategy(str, AutoName):
     """Specifies the strategy according to which identifiers should be normalized."""
