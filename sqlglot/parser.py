@@ -5058,7 +5058,7 @@ class Parser(metaclass=_Parser):
             collation = self._parse_bitwise()
 
         return self.expression(
-            exp.Replace, this=this,  expression=expression
+            exp.Days_Between, this=this,  expression=expression
         ) 
 
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:
