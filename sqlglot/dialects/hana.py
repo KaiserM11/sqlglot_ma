@@ -20,7 +20,8 @@ from sqlglot.dialects.dialect import (
     rtrim_sql,
     ltrim_sql,
     toint_sql,
-    replace_sql
+    replace_sql,
+    daysbetween_sql
 
 )
 from sqlglot.expressions import DataType
@@ -778,7 +779,8 @@ class HANA(Dialect):
             exp.Rtrim: rtrim_sql,
             exp.Ltrim: ltrim_sql,
             exp.Replace: replace_sql,
-            exp.To_Int: toint_sql
+            exp.To_Int: toint_sql,
+            exp.Days_Between: daysbetween_sql
         }
 
         TRANSFORMS.pop(exp.ReturnsProperty)
