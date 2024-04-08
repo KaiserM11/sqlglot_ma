@@ -69,6 +69,9 @@ def broadcast(df: DataFrame) -> DataFrame:
 def todate(col: ColumnOrName):
     return Column.invoke_expression_over_column(col, expression.To_Date)
 
+def daysbetween(col: ColumnOrName):
+    return Column.invoke_expression_over_column(col, expression.Days_Between)
+
 
 def sqrt(col: ColumnOrName) -> Column:
     return Column.invoke_expression_over_column(col, expression.Sqrt)

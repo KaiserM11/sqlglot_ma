@@ -5041,7 +5041,7 @@ class Parser(metaclass=_Parser):
     def _parse_daysbetween(self) -> exp.Days_Between:
         this = self._parse_bitwise()
         expression = self._parse_bitwise()
-        return self.expression(exp.Days_Between, this = this)
+        return self.expression(exp.Days_Between, this = this, expression = expression)
 
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:
         return self._match(TokenType.WINDOW) and self._parse_csv(self._parse_named_window)

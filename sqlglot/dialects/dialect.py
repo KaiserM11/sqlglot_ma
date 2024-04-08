@@ -864,7 +864,7 @@ def daysbetween_sql(self: Generator, expression: exp.Days_Between) -> str:
     fromdate = self.sql(expression, "this")
     todate = self.sql(expression, "expression")
 
-    return self.func("DATETIME_DIFF", expression.this, expression.expression)
+    return self.func("DATETIME_DIFF", fromdate, todate)
 
 def toint_sql(self: Generator, expression: exp.To_Int) -> str:
     variable = self.sql(expression, "this")
