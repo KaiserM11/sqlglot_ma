@@ -5039,9 +5039,27 @@ class Parser(metaclass=_Parser):
         return self.expression(exp.To_Date, this = this)
     
     def _parse_daysbetween(self) -> exp.Days_Between:
+        position = None
+        collation = None
+        expression = None
+
+        if self._match_texts(self.TRIM_TYPES):
+            position = self._prev.text.upper()
+
         this = self._parse_bitwise()
-        expression = self._parse_bitwise()
-        return self.expression(exp.Days_Between, this = this, expression = expression)
+        if self._match_set((TokenType.FROM, TokenType.COMMA)):
+            invert_order = self._prev.token_type == TokenType.FROM or self.TRIM_PATTERN_FIRST
+            expression = self._parse_bitwise()
+
+            if invert_order:
+                this, expression = expression, this
+
+        if self._match(TokenType.COLLATE):
+            collation = self._parse_bitwise()
+
+        return self.expression(
+            exp.Replace, this=this,  expression=expression
+        ) 
 
     def _parse_window_clause(self) -> t.Optional[t.List[exp.Expression]]:
         return self._match(TokenType.WINDOW) and self._parse_csv(self._parse_named_window)

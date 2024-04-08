@@ -2383,7 +2383,9 @@ class Generator(metaclass=_Generator):
         return self.func("CONVERT", expression.this)
 
     def daysbetween_sql(self, expression: exp.Days_Between) -> str:
-        return self.func("DATETIME_DIFF", expression.this, expression.expression)
+        fromdate = self.sql(expression, "this")
+        todate = self.sql(expression, "expression")
+        return f"DATETIME_DIFF({fromdate}, {todate})"
         
     def ltrim_sql(self, expression: exp.Ltrim) ->  str:
         return self.func("TEXT_TRIM", expression.this)
