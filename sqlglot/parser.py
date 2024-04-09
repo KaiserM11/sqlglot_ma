@@ -5041,7 +5041,12 @@ class Parser(metaclass=_Parser):
     
     def _parse_tovarchar(self) -> exp.To_Varchar:
         this = self._parse_bitwise()
-        return self.expression(exp.To_Varchar, this = this)
+        if self._match_set((TokenType.FROM, TokenType.COMMA)):
+            invert_order = self._prev.token_type == TokenType.FROM or self.TRIM_PATTERN_FIRST
+            expression = self._parse_bitwise()
+
+            
+        return self.expression(exp.To_Varchar, this=this, expression=expression)
     
     def _parse_daysbetween(self) -> exp.Days_Between:
         position = None
