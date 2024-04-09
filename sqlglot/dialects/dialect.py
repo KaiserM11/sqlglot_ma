@@ -866,6 +866,9 @@ def daysbetween_sql(self: Generator, expression: exp.Days_Between) -> str:
 
     return f"DATETIME_DIFF({fromdate}, {todate})"
 
+def tovarchar_sql(self: Generator, expression: exp.To_Varchar) -> str:
+    return self.func("CONVERT", expression.this)
+
 def toint_sql(self: Generator, expression: exp.To_Int) -> str:
     variable = self.sql(expression, "this")
     return f"INT({variable})"

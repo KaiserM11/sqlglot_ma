@@ -2395,6 +2395,9 @@ class Generator(metaclass=_Generator):
     
     def toint_sql(self, expression: exp.To_Int) -> str:
         return self.func("INT", expression.this)
+    
+    def tovarchar_sql(self, expression: exp.To_Varchar) -> str:
+        return self.func("CONVERT", expression.this)
         
     def convert_concat_args(self, expression: exp.Concat | exp.ConcatWs) -> t.List[exp.Expression]:
         args = expression.expressions

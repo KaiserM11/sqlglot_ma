@@ -72,6 +72,9 @@ def todate(col: ColumnOrName):
 def daysbetween(col: ColumnOrName):
     return Column.invoke_expression_over_column(col, expression.Days_Between)
 
+def tovarchar(col: ColumnOrName):
+    return Column.invoke_expression_over_column(col, expression.To_Varchar)
+
 
 def sqrt(col: ColumnOrName) -> Column:
     return Column.invoke_expression_over_column(col, expression.Sqrt)

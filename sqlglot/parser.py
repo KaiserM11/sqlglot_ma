@@ -895,6 +895,7 @@ class Parser(metaclass=_Parser):
         "RTRIM": lambda self: self._parse_ltrim(),
         "TO_INT": lambda self: self._parse_toint(),
         "TO_DATE": lambda self: self._parse_todate(),
+        "TO_VARCHAR": lambda self: self._parse_tovarchar(),
         "DAYS_BETWEEN": lambda self: self._parse_daysbetween(),
         "TRY_CAST": lambda self: self._parse_cast(False, safe=True),
         "TRY_CONVERT": lambda self: self._parse_convert(False, safe=True),
@@ -5037,6 +5038,10 @@ class Parser(metaclass=_Parser):
     def _parse_todate(self) -> exp.To_Date:
         this = self._parse_bitwise()
         return self.expression(exp.To_Date, this = this)
+    
+    def _parse_tovarchar(self) -> exp.To_Varchar:
+        this = self._parse_bitwise()
+        return self.expression(exp.To_Varchar, this = this)
     
     def _parse_daysbetween(self) -> exp.Days_Between:
         position = None
