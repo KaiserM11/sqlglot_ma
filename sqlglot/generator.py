@@ -2342,7 +2342,7 @@ class Generator(metaclass=_Generator):
 
         if default:
             statements[-1] = statements[-1][:-1]
-            statements.append(f")")
+            statements.append(f", {default})")
 
         #statements.append("END")
 
