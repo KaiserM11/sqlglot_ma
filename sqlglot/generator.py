@@ -2381,6 +2381,12 @@ class Generator(metaclass=_Generator):
     
     def todate_sql(self, expression: exp.To_Date) ->str:
         return self.func("CONVERT", expression.this)
+    
+    def quarter_sql(self, expression: exp.Quarter) -> str:
+        return self.func("QUARTER", expression.this)
+    
+    def monthname_sql(self, expression: exp.Monthname) ->str:
+        return self.func("MONTHNAME", expression.this)
 
     def daysbetween_sql(self, expression: exp.Days_Between) -> str:
         fromdate = self.sql(expression, "this")

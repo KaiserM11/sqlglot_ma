@@ -75,6 +75,11 @@ def daysbetween(col: ColumnOrName):
 def tovarchar(col: ColumnOrName):
     return Column.invoke_expression_over_column(col, expression.To_Varchar)
 
+def monthname(col:ColumnOrName):
+    return Column.invoke_expression_over_column(col, expression.Monthname)
+
+def quarter(col:ColumnOrName):
+    return Column.invoke_expression_over_column(col, expression.Quarter)
 
 def sqrt(col: ColumnOrName) -> Column:
     return Column.invoke_expression_over_column(col, expression.Sqrt)

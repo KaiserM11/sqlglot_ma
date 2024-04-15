@@ -5454,6 +5454,12 @@ class Days_Between(Func):
 class To_Varchar(Func):
     arg_types = {"this": True, "expression": False}
 
+class Quarter(Func):
+    arg_types = {"this": True, "expression": False}
+
+class Monthname(Func):
+    arg_types = {"this": True, "expression": False}
+
 class Trim(Func):
     arg_types = {
         "this": True,

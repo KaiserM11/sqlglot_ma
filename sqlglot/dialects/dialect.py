@@ -869,6 +869,12 @@ def daysbetween_sql(self: Generator, expression: exp.Days_Between) -> str:
 def tovarchar_sql(self: Generator, expression: exp.To_Varchar) -> str:
     return self.func("CONVERT", expression.this)
 
+def quarter_sql(self: Generator, expression: exp.Quarter) -> str:
+    return self.func("QUARTER", expression.this)
+
+def monthname_sql(self: Generator, expression: exp.Monthname) -> str:
+    return self.func("MONTHNAME", expression.this)
+
 def toint_sql(self: Generator, expression: exp.To_Int) -> str:
     variable = self.sql(expression, "this")
     return f"INT({variable})"

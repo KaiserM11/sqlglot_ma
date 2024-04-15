@@ -896,6 +896,8 @@ class Parser(metaclass=_Parser):
         "TO_INT": lambda self: self._parse_toint(),
         "TO_DATE": lambda self: self._parse_todate(),
         "TO_VARCHAR": lambda self: self._parse_tovarchar(),
+        "QUARTER": lambda self: self._parse_quarter(),
+        "MONTHNAME": lambda self: self._parse_monthname(),
         "DAYS_BETWEEN": lambda self: self._parse_daysbetween(),
         "TRY_CAST": lambda self: self._parse_cast(False, safe=True),
         "TRY_CONVERT": lambda self: self._parse_convert(False, safe=True),
@@ -5045,8 +5047,16 @@ class Parser(metaclass=_Parser):
             invert_order = self._prev.token_type == TokenType.FROM or self.TRIM_PATTERN_FIRST
             expression = self._parse_bitwise()
 
-            
         return self.expression(exp.To_Varchar, this=this, expression=expression)
+    
+    def _parse_monthname(self) -> exp.Monthname:
+        this = self._parse_bitwise()
+        return self.expression(exp.Monthname, this = this)
+    
+    def _parse_quarter(self) -> exp.Quarter:
+        this = self._parse_bitwise()
+        return self.expression(exp.Quarter, this = this)
+    
     
     def _parse_daysbetween(self) -> exp.Days_Between:
         position = None
