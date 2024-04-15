@@ -872,7 +872,7 @@ def tovarchar_sql(self: Generator, expression: exp.To_Varchar) -> str:
 def quarter_sql(self: Generator, expression: exp.Quarter) -> str:
     return self.func("QUARTER", expression.this)
 
-def monthname_sql(self: Generator, expression: exp.Monthname) -> str:
+def monthname_sql(self: Generator, expression: exp.MonthName) -> str:
     return self.func("MONTHNAME", expression.this)
 
 def toint_sql(self: Generator, expression: exp.To_Int) -> str:

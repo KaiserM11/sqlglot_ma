@@ -76,7 +76,7 @@ def tovarchar(col: ColumnOrName):
     return Column.invoke_expression_over_column(col, expression.To_Varchar)
 
 def monthname(col:ColumnOrName):
-    return Column.invoke_expression_over_column(col, expression.Monthname)
+    return Column.invoke_expression_over_column(col, expression.MonthName)
 
 def quarter(col:ColumnOrName):
     return Column.invoke_expression_over_column(col, expression.Quarter)

@@ -2385,7 +2385,7 @@ class Generator(metaclass=_Generator):
     def quarter_sql(self, expression: exp.Quarter) -> str:
         return self.func("QUARTER", expression.this)
     
-    def monthname_sql(self, expression: exp.Monthname) ->str:
+    def monthname_sql(self, expression: exp.MonthName) ->str:
         return self.func("MONTHNAME", expression.this)
 
     def daysbetween_sql(self, expression: exp.Days_Between) -> str:

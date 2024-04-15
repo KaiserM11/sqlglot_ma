@@ -5457,7 +5457,7 @@ class To_Varchar(Func):
 class Quarter(Func):
     arg_types = {"this": True, "expression": False}
 
-class Monthname(Func):
+class MonthName(Func):
     arg_types = {"this": True, "expression": False}
 
 class Trim(Func):

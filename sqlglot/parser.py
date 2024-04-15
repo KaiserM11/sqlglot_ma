@@ -5049,9 +5049,9 @@ class Parser(metaclass=_Parser):
 
         return self.expression(exp.To_Varchar, this=this, expression=expression)
     
-    def _parse_monthname(self) -> exp.Monthname:
+    def _parse_monthname(self) -> exp.MonthName:
         this = self._parse_bitwise()
-        return self.expression(exp.Monthname, this = this)
+        return self.expression(exp.MonthName, this = this)
     
     def _parse_quarter(self) -> exp.Quarter:
         this = self._parse_bitwise()

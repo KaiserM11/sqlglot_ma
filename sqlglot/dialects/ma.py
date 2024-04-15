@@ -746,7 +746,7 @@ class MA(Dialect):
             exp.DateAdd: date_delta_sql("DATETIME_ADDITION"),
             exp.DateDiff: date_delta_sql("DATETIME_DIFFERENCE"),
             exp.Quarter: rename_func("DATETIME_INTERVAL"),
-            exp.Monthname: rename_func("CONVERT"),
+            exp.MonthName: rename_func("CONVERT"),
             exp.CTE: transforms.preprocess([qualify_derived_table_outputs]),
             exp.CurrentDate: rename_func("GETDATE"),
             exp.CurrentTimestamp: rename_func("DATETIME_NOW"),
