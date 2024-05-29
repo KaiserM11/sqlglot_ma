@@ -3119,7 +3119,7 @@ class Generator(metaclass=_Generator):
         elif name == "DATETIME_DIFFERENCE":
             return f'DATETIME_DIFFERENCE{prefix}{self.format_args(args[-2])},{self.format_args(args[-1])}{suffix}'
         else:
-            return f"{self.normalize_func(name)}{prefix}{self.format_args(first_arg)}{suffix}"
+            return f"{self.normalize_func(name)}{prefix}{self.format_args(*args)}{suffix}"
 
     def format_args(self, *args: t.Optional[str | exp.Expression]) -> str:
         arg_sqls = tuple(self.sql(arg) for arg in args if arg is not None)
