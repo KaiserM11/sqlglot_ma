@@ -789,8 +789,7 @@ class MA(Dialect):
             exp.Days_Between: daysbetween_sql,
             exp.To_Varchar: tovarchar_sql,
             exp.TsOrDsAdd: date_delta_sql("DATETIME_ADDITION", cast=True),
-            exp.TsOrDsDiff: date_delta_sql("DATETIME_DIFFERENCE"),
-            exp.Round: rename_func("This is the difference")
+            exp.TsOrDsDiff: date_delta_sql("DATETIME_DIFFERENCE")
         }
 
         TRANSFORMS.pop(exp.ReturnsProperty)
