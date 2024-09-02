@@ -790,6 +790,7 @@ class MA(Dialect):
             exp.To_Varchar: tovarchar_sql,
             exp.TsOrDsAdd: date_delta_sql("DATETIME_ADDITION", cast=True),
             exp.TsOrDsDiff: date_delta_sql("DATETIME_DIFFERENCE"),
+            exp.Round: rename_func("This is the difference")
         }
 
         TRANSFORMS.pop(exp.ReturnsProperty)
