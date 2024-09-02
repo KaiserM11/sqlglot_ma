@@ -84,3 +84,4 @@ from sqlglot.dialects.teradata import Teradata
 from sqlglot.dialects.trino import Trino
 from sqlglot.dialects.tsql import TSQL
 from sqlglot.dialects.hana import HANA
+from sqlglot.dialects.ma import MA
