@@ -1010,3 +1010,6 @@ class TSQL(Dialect):
                 return f"{self.sql(expression.this, 'this')} {op} {self.sql(expression, 'expression')}"
             else:
                 return f"{self.sql(expression, 'this')} {op} {self.sql(expression, 'expression')}"
+            
+        def eq_sql(self, expression: exp.EQ) -> str:
+            return self.binary(expression, "=")
