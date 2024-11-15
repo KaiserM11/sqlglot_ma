@@ -4,7 +4,7 @@ import datetime
 import re
 import typing as t
 
-from sqlglot import exp, generator, parser, tokens, transforms
+from sqlglot import exp, generator_backup, parser, tokens, transforms
 from sqlglot.dialects.dialect import (
     Dialect,
     NormalizationStrategy,
@@ -686,7 +686,7 @@ class TSQL(Dialect):
 
             return self.expression(exp.UniqueColumnConstraint, this=this)
 
-    class Generator(generator.Generator):
+    class Generator(generator_backup.Generator):
         LIMIT_IS_TOP = True
         QUERY_HINTS = False
         RETURNING_END = False
@@ -719,7 +719,7 @@ class TSQL(Dialect):
         }
 
         TYPE_MAPPING = {
-            **generator.Generator.TYPE_MAPPING,
+            **generator_backup.Generator.TYPE_MAPPING,
             exp.DataType.Type.BOOLEAN: "BIT",
             exp.DataType.Type.DECIMAL: "NUMERIC",
             exp.DataType.Type.DATETIME: "DATETIME2",
@@ -732,7 +732,7 @@ class TSQL(Dialect):
         }
 
         TRANSFORMS = {
-            **generator.Generator.TRANSFORMS,
+            **generator_backup.Generator.TRANSFORMS,
             exp.AnyValue: any_value_to_max_sql,
             exp.AutoIncrementColumnConstraint: lambda *_: "IDENTITY",
             exp.Day: rename_func("DATETIME_INTERVAL"),
@@ -785,7 +785,7 @@ class TSQL(Dialect):
         TRANSFORMS.pop(exp.ReturnsProperty)
 
         PROPERTIES_LOCATION = {
-            **generator.Generator.PROPERTIES_LOCATION,
+            **generator_backup.Generator.PROPERTIES_LOCATION,
             exp.VolatileProperty: exp.Properties.Location.UNSUPPORTED,
         }
 
