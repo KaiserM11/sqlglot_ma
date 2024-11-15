@@ -778,8 +778,6 @@ class TSQL(Dialect):
             exp.Rtrim: rtrim_sql,
             exp.Ltrim: ltrim_sql,
             exp.Replace: replace_sql,
-            exp.TsOrDsAdd: date_delta_sql("DATETIME_ADDITION", cast=True),
-            exp.TsOrDsDiff: date_delta_sql("DATETIME_DIFFERENCE"),
         }
 
         TRANSFORMS.pop(exp.ReturnsProperty)
