@@ -1003,13 +1003,3 @@ class TSQL(Dialect):
                 this_sql = self.sql(this)
             expression_sql = self.sql(expression, "expression")
             return self.func(name, this_sql, expression_sql if expression_sql else None)
-        
-        def binary(self, expression: exp.Binary, op: str) -> str:
-            op = self.maybe_comment(op, comments=expression.comments)
-            if "Not" in self.sql(expression, "this"):
-                return f"{self.sql(expression.this, 'this')} {op} {self.sql(expression, 'expression')}"
-            else:
-                return f"{self.sql(expression, 'this')} {op} {self.sql(expression, 'expression')}"
-            
-        def eq_sql(self, expression: exp.EQ) -> str:
-            return self.binary(expression, "=")
